@@ -1,3 +1,4 @@
 from django.contrib import admin
+from xp_tracker_app.models import Story, Task
 
-# Register your models here.
+admin.site.register((Story, Task))
