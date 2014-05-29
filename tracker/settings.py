@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'tracker',
-
+    'xp_tracker_app',
 )
 
 MIDDLEWARE_CLASSES = (
