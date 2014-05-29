@@ -20,8 +20,8 @@ class Task(models.Model):
     time_est = models.DateField()
     time_fin = models.DateTimeField(blank=True, null=True)
 
-    developer = models.CharField(max_length=60, choices=DEVELOPERS, default='GvR')
-    iteration = models.IntegerField(default=1)
+    developer = models.CharField(max_length=60, choices=DEVELOPERS)
+    iteration = models.IntegerField()
 
     def __str__(self):
         return self.task_name()
