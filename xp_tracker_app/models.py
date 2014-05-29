@@ -10,7 +10,7 @@ class Story(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=300)
     time_est = models.DateField()
-    time_spent = models.DateField(blank=True, null=True)
+    time_fin = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.task_name()
