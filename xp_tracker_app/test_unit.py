@@ -5,7 +5,7 @@ from xp_tracker_app.models import Story, Task
 
 
 class StoryTestCase(TestCase):
-    """ Testing of Story model """
+    """ Unit tests for Story model """
     def setUp(self):
         Story.objects.create(story_name="User story",
                              time_est=(timezone.now() + dt.timedelta(weeks=1)).date())
@@ -17,7 +17,7 @@ class StoryTestCase(TestCase):
         self.assertEqual(story.time_est, (timezone.now() + dt.timedelta(weeks=1)).date())
 
 class TaskTestCase(TestCase):
-    """ Testing of Task model """
+    """ Unit tests for Task model """
     def setUp(self):
         Task.objects.create(task_name="Task name",
                             time_est=(timezone.now() + dt.timedelta(days=1)).date(),

@@ -5,6 +5,7 @@ import datetime as dt
 from xp_tracker_app.models import Story
 
 class IndexTest(TestCase):
+    """ Functional tests for index page """
     def setUp(self):
         self.c = Client()
 
@@ -14,6 +15,8 @@ class IndexTest(TestCase):
 
     def test_index_template(self):
         response = self.c.get('/')
+
+        self.assertContains(response, 'Main page')
 
         if response.context['stories']:
             self.assertContains(response, 'User Stories')
