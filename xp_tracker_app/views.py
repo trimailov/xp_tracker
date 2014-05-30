@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from xp_tracker_app.models import Story, Task
 
 def index(request):
-    return HttpResponse("hello")
+    contents = {}
+    contents['stories'] = Story.objects.all()
+    contents['tasks'] = Task.objects.all()
+    return render(request, 'index.html', contents)

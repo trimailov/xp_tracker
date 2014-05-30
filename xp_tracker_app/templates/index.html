@@ -1,0 +1,33 @@
+{% block title %}
+    XP tracker, Main page
+{% endblock title %}
+
+{% block content %}
+    {% if stories %}
+        <h2>User Stories</h2>
+        {% for story in stories %}
+            <div>
+                <h4>{{ story.story_name }}</h4>
+                <span>{{ story.time_est }}</span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h4>There are no stories</h4>
+        </div>
+    {% endif %}
+
+    {% if tasks %}
+        <h2>Tasks</h2>
+        {% for task in tasks %}
+            <div>
+                <h4>{{ task.task_name }}</h4>
+                <span>{{ task.time_est }} | {{ task.developer }} | {{ task.iteration }} </span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h4>There are no tasks</h4>
+        </div>
+    {% endif %}
+{% endblock content %}
