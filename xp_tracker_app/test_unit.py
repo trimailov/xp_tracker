@@ -15,13 +15,14 @@ class StoryTestCase(TestCase):
 
         self.assertEqual(story.story_name, "User story")
         self.assertEqual(story.time_est, (timezone.now() + dt.timedelta(weeks=1)).date())
+        self.assertEqual(story.time_start, dt.date.today())
 
 class TaskTestCase(TestCase):
     """ Unit tests for Task model """
     def setUp(self):
         Task.objects.create(task_name="Task name",
                             time_est=(timezone.now() + dt.timedelta(days=1)).date(),
-                            developer='LT',
+                            developer='Linus Torvalds',
                             iteration=1)
 
 
@@ -30,8 +31,9 @@ class TaskTestCase(TestCase):
         task1 = Task.objects.get(task_name="Task name")
 
         self.assertEqual(task1.time_est, (timezone.now() + dt.timedelta(days=1)).date())
+        self.assertEqual(task1.time_start, dt.date.today())
         self.assertIsNone(task1.time_fin)
-        self.assertEqual(task1.developer, 'LT')
+        self.assertEqual(task1.developer, 'Linus Torvalds')
         self.assertEqual(task1.iteration, 1)
 
     def test_finished_task(self):

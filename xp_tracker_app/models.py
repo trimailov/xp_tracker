@@ -2,6 +2,7 @@ from django.db import models
 
 class Story(models.Model):
     story_name = models.CharField(max_length=200)
+    time_start = models.DateField(auto_now_add=True)
     time_est = models.DateField()
 
     def __str__(self):
@@ -17,6 +18,7 @@ class Task(models.Model):
     )
 
     task_name = models.CharField(max_length=200)
+    time_start = models.DateField(auto_now_add=True)
     time_est = models.DateField()
     time_fin = models.DateTimeField(blank=True, null=True)
 
