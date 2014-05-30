@@ -4,5 +4,6 @@ from xp_tracker_app import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^new_story/$', views.new_story, name='new_story'),
-    url(r'^new_task/$', views.new_task, name='new_task')
+    url(r'^new_task/$', views.new_task, name='new_task'),
+    url(r'^task_finished/(?P<task_pk>\d+)/$', views.task_finished, name='task_finished'),    
 )

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from xp_tracker_app.models import Story, Task
 from xp_tracker_app.forms import StoryForm, TaskForm
+from django.utils import timezone
 
 def index(request):
     contents = {}
@@ -21,3 +22,11 @@ def new_task(request):
         form.save()
         return redirect('index')
     return render(request, 'new_task.html', {'form':form})
+
+def task_finished(request, task_pk):
+    task = Task.objects.get(pk=task_pk)
+    print(task.task_name, task_pk)
+    task.time_fin = timezone.now()
+    print(task.time_fin)
+    task.save()
+    return redirect('index')

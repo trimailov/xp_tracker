@@ -15,4 +15,5 @@ def create_tasks():
         Task.objects.create(task_name="Task #%s" % str(task+1),
                             time_est=(timezone.now() + dt.timedelta(days=task+1)).date(),
                             developer=Task.DEVELOPERS[random.randint(0, 4)][1],
-                            iteration=random.randint(1, 5))
+                            iteration=task/6+1 #iterations are from 1 to 5
+                            )

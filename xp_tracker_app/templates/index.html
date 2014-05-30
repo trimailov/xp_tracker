@@ -13,7 +13,7 @@
         {% for story in stories %}
             <div>
                 <h4>{{ story.story_name }}</h4>
-                <span>{{ story.time_est }}</span>
+                <span> {{ story.time_start }} | {{ story.time_est }}</span>
             </div>
         {% endfor %}
     {% else %}
@@ -27,7 +27,17 @@
         {% for task in tasks %}
             <div>
                 <h4>{{ task.task_name }}</h4>
-                <span>{{ task.time_est }} | {{ task.developer }} | {{ task.iteration }} </span>
+                <span> 
+                    {{ task.time_start }} | 
+                    {{ task.time_est }} | 
+                    {{ task.developer }} | 
+                    {{ task.iteration }} | 
+                    {% if task.time_fin %}
+                        {{ task.time_fin }}
+                    {% else %}
+                        <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Finished</a> 
+                    {% endif %}
+                </span>
             </div>
         {% endfor %}
     {% else %}
