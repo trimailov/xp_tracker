@@ -9,11 +9,11 @@ class Story(models.Model):
 
 class Task(models.Model):
     DEVELOPERS = (
-        ('GvR', 'Guido von Rossum'),
-        ('LT', 'Linus Torvalds'),
-        ('L', 'Laurynas'),
-        ('Mar', 'Marius'),
-        ('Man', 'Mantas'),
+        ('Guido von Rossum', 'Guido von Rossum'),
+        ('Linus Torvalds', 'Linus Torvalds'),
+        ('Laurynas', 'Laurynas'),
+        ('Marius', 'Marius'),
+        ('Mantas', 'Mantas'),
     )
 
     task_name = models.CharField(max_length=200)

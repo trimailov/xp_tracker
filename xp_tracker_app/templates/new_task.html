@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+    XP tracker, New task
+{% endblock title %}
+
+{% block content %}
+    <form id="story_form", method="post" action="{% url 'xp_tracker_app.views.new_task' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock content %}

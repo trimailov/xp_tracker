@@ -5,6 +5,9 @@
 {% endblock title %}
 
 {% block content %}
+    <a href="{% url 'xp_tracker_app.views.new_story' %}">New story</a></br>
+    <a href="{% url 'xp_tracker_app.views.new_task' %}">New task</a>    
+
     {% if stories %}
         <h2>User Stories</h2>
         {% for story in stories %}
