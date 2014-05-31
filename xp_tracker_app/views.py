@@ -6,7 +6,7 @@ from django.utils import timezone
 def index(request):
     contents = {}
     contents['stories'] = Story.objects.all()
-    contents['tasks'] = Task.objects.all()
+    contents['tasks'] = Task.objects.order_by('iteration', 'time_est')
     return render(request, 'index.html', contents)
 
 def new_story(request):
@@ -25,8 +25,6 @@ def new_task(request):
 
 def task_finished(request, task_pk):
     task = Task.objects.get(pk=task_pk)
-    print(task.task_name, task_pk)
     task.time_fin = timezone.now()
-    print(task.time_fin)
     task.save()
     return redirect('index')

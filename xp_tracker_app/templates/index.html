@@ -32,10 +32,12 @@
                     {{ task.time_est }} | 
                     {{ task.developer }} | 
                     {{ task.iteration }} | 
+                    {{ task.time_estimated }} |
                     {% if task.time_fin %}
-                        {{ task.time_fin }}
+                        {{ task.time_fin }} |
+                        {{ task.time_spent }} 
                     {% else %}
-                        <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Finished</a> 
+                        <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Finished</a>  |
                     {% endif %}
                 </span>
             </div>
