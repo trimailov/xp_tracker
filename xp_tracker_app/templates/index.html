@@ -28,11 +28,12 @@
     {% if tasks %}
         <h2>Tasks</h2>
         Estimated total work time: {{ estimated_sum }} </br>
-        Working time so far: {{ spent_sum }} </br>
+        Spent working time: {{ spent_sum }} </br>
         {% for task in tasks %}
             <div>
                 <h4>{{ task.task_name }}</h4>
                 <span> 
+                    Story: {{ task.story }} |
                     Iteration: {{ task.iteration }} | 
                     Developer: {{ task.developer }} | 
                     Deadline: {{ task.time_est }} | 
