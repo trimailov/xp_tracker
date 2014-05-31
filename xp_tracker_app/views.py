@@ -5,6 +5,7 @@ from xp_tracker_app.helper import delta_to_time
 from django.utils import timezone
 import datetime as dt
 
+
 def index(request):
     contents = {}
     contents['stories'] = Story.objects.order_by('time_est')

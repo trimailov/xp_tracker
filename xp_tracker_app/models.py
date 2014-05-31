@@ -10,6 +10,11 @@ class Story(models.Model):
     def __str__(self):
         return self.story_name
 
+    def time_spent(self, pk):
+        story = Story.objects.get(pk=pk)
+        story_tasks = story.task_set.all()
+        print(story_tasks)
+
     def time_estimated(self):
         return delta_to_time(self.time_est - self.time_start)
 

@@ -9,4 +9,4 @@ class StoryForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['task_name', 'time_est', 'developer', 'iteration']
+        fields = ['task_name', 'time_est', 'developer', 'iteration', 'story']
