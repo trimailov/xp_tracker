@@ -1,12 +1,5 @@
 from django.db import models
-
-def delta_to_time(timedelta):
-    """ Converts datetime.timedelta time in seconds to days, hours, minutes """
-    days, seconds = timedelta.days, timedelta.seconds
-    hours = seconds // 3600
-    minutes = (seconds % 3600) // 60
-    seconds = seconds % 60
-    return "{}d {}h {}m {}s".format(days, hours, minutes, seconds)
+from xp_tracker_app.helper import delta_to_time
 
 class Story(models.Model):
     """ User Story model """
@@ -16,6 +9,9 @@ class Story(models.Model):
 
     def __str__(self):
         return self.story_name
+
+    def time_estimated(self):
+        return delta_to_time(self.time_est - self.time_start)
 
 class Task(models.Model):
     """ Task model """
@@ -34,6 +30,8 @@ class Task(models.Model):
 
     developer = models.CharField(max_length=60, choices=DEVELOPERS)
     iteration = models.IntegerField()
+
+    story = models.ForeignKey(Story)
 
     def __str__(self):
         return self.task_name

@@ -13,7 +13,10 @@
         {% for story in stories %}
             <div>
                 <h4>{{ story.story_name }}</h4>
-                <span> {{ story.time_start }} | {{ story.time_est }}</span>
+                <span> 
+                    Deadline: {{ story.time_est }} |
+                    Estimated work time: {{ story.time_estimated }}
+                </span>
             </div>
         {% endfor %}
     {% else %}
@@ -24,18 +27,19 @@
 
     {% if tasks %}
         <h2>Tasks</h2>
+        Estimated total work time: {{ estimated_sum }} </br>
+        Working time so far: {{ spent_sum }} </br>
         {% for task in tasks %}
             <div>
                 <h4>{{ task.task_name }}</h4>
                 <span> 
-                    {{ task.time_start }} | 
-                    {{ task.time_est }} | 
-                    {{ task.developer }} | 
-                    {{ task.iteration }} | 
-                    {{ task.time_estimated }} |
+                    Iteration: {{ task.iteration }} | 
+                    Developer: {{ task.developer }} | 
+                    Deadline: {{ task.time_est }} | 
+                    Estimated work time: {{ task.time_estimated }} |
                     {% if task.time_fin %}
-                        {{ task.time_fin }} |
-                        {{ task.time_spent }} 
+                        Task finsihing time: {{ task.time_fin }} |
+                        Work time spent on task: {{ task.time_spent }} 
                     {% else %}
                         <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Finished</a>  |
                     {% endif %}

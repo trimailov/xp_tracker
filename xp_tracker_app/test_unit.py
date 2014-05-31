@@ -1,7 +1,8 @@
 import datetime as dt
 from django.test import TestCase
 from django.utils import timezone
-from xp_tracker_app.models import Story, Task, delta_to_time
+from xp_tracker_app.models import Story, Task
+from xp_tracker_app.helper import delta_to_time
 
 
 class StoryTestCase(TestCase):
@@ -43,16 +44,16 @@ class TaskTestCase(TestCase):
 
         self.assertEqual(task1.time_fin.replace(tzinfo=None), dt.datetime(2015, 6, 1, 12))
 
-class ModelsTestCase(TestCase):
-    """ Unit tests for extra functions in models.py """
+class HelpersTestCase(TestCase):
+    """ Unit tests for helper functions in helper.py """
     def test_delta_to_time(self):
         time1 = dt.timedelta(1) # 1 day
         time2 = dt.timedelta(0, 1) # 1 sec
         time3 = dt.timedelta(0, 60) # 1 min
         time4 = dt.timedelta(0, 3600) # 1 hour
 
-        self.assertEqual(delta_to_time(time1), "1d 0h 0m 0s")
-        self.assertEqual(delta_to_time(time2), "0d 0h 0m 1s")
-        self.assertEqual(delta_to_time(time3), "0d 0h 1m 0s")
-        self.assertEqual(delta_to_time(time4), "0d 1h 0m 0s")
-        self.assertEqual(delta_to_time(time1+time2+time3+time4), "1d 1h 1m 1s")
+        self.assertEqual(delta_to_time(time1), "1d 0h 0m")
+        self.assertEqual(delta_to_time(time2), "0d 0h 0m")
+        self.assertEqual(delta_to_time(time3), "0d 0h 1m")
+        self.assertEqual(delta_to_time(time4), "0d 1h 0m")
+        self.assertEqual(delta_to_time(time1+time2+time3+time4), "1d 1h 1m")
