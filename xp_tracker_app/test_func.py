@@ -2,7 +2,7 @@ from django.test.client import Client
 from django.test import TestCase
 from django.utils import timezone
 import datetime as dt
-from xp_tracker_app.models import Story
+from xp_tracker_app.models import Story, Task
 from xp_tracker_app.forms import TaskForm
 
 class IndexTest(TestCase):
@@ -43,3 +43,24 @@ class FormTest(TestCase):
         response = self.client.get('/new_story/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'new_story.html', 'base.html')
+
+    def test_task_form_fails(self):
+        story = Story.objects.create(story_name='Story 1', 
+                                     time_est=dt.datetime(2015, 6, 1, 12))
+        response = self.client.post('/new_task/', {'task_name':'Task',
+                                                   'time_est': 'invalid_time',
+                                                   'developer': Task.DEVELOPERS[0][0],
+                                                   'iteration': 1,
+                                                   'story': story}, follow=True)
+        self.assertFormError(response, 'form', 'time_est', 'Enter a valid date/time.')
+
+    def test_task_form_passes(self):
+        story = Story.objects.create(story_name='Story 1', 
+                                     time_est=dt.datetime(2015, 6, 1, 12))
+        response = self.client.post('/new_task/', {'task_name':'Task',
+                                                   'time_est': dt.datetime(2015, 4, 23, 12, 15),
+                                                   'developer': Task.DEVELOPERS[0][0],
+                                                   'iteration': 1,
+                                                   'story': story}, follow=True)
+        # self.assertFormError(response, 'form', 'time_est', 'Enter a valid date/time.')
+        self.assertTemplateUsed(response, 'index.html')

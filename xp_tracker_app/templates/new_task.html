@@ -4,7 +4,7 @@
 {% endblock title %}
 
 {% block content %}
-    <form id="story_form", method="post" action="{% url 'xp_tracker_app.views.new_task' %}">
+    <form id="task_form", method="post" action="{% url 'xp_tracker_app.views.new_task' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
