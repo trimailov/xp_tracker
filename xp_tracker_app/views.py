@@ -11,8 +11,13 @@ def index(request):
     contents['stories'] = Story.objects.order_by('time_est')
     contents['tasks'] = Task.objects.order_by('iteration', 'time_est')
 
-    spent_sum = dt.timedelta(0, 0)
-    estimated_sum = dt.timedelta(0, 0)
+    contents['story_time'] = [] # list of tuples: (<story object>, story.time_spent)
+
+    for story in contents['stories']:
+        contents['story_time'].append( (story, story.time_spent(story.pk)) )
+
+    spent_sum = dt.timedelta(0, 0) # sum of spent work hours on tasks
+    estimated_sum = dt.timedelta(0, 0) # sum of estimated work hours on tasks
 
     for task in contents['tasks']:
         if task.time_fin:

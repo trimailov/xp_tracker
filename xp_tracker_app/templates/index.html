@@ -8,6 +8,22 @@
     <a href="{% url 'xp_tracker_app.views.new_story' %}">New story</a></br>
     <a href="{% url 'xp_tracker_app.views.new_task' %}">New task</a>    
 
+    {% if story_time %}
+        <h2>User Stories</h2>
+        {% for s_t in story_time %}
+            <div>
+                <h4>{{ s_t.0.story_name }}</h4>
+                <span>
+                    Deadline: {{ s_t.0.time_est }} |
+                    Estimated work time: {{ s_t.0.time_estimated }} |
+                    {% if s_t.1 != '0d 0h 0m' %}
+                        Spent work time: {{ s_t.1 }}
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     {% if stories %}
         <h2>User Stories</h2>
         {% for story in stories %}
@@ -15,7 +31,7 @@
                 <h4>{{ story.story_name }}</h4>
                 <span> 
                     Deadline: {{ story.time_est }} |
-                    Estimated work time: {{ story.time_estimated }}
+                    Estimated work time: {{ story.time_estimated }} |
                 </span>
             </div>
         {% endfor %}
@@ -28,7 +44,7 @@
     {% if tasks %}
         <h2>Tasks</h2>
         Estimated total work time: {{ estimated_sum }} </br>
-        Spent working time: {{ spent_sum }} </br>
+        Spent work time: {{ spent_sum }} </br>
         {% for task in tasks %}
             <div>
                 <h4>{{ task.task_name }}</h4>

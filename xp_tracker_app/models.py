@@ -1,4 +1,5 @@
 from django.db import models
+import datetime as dt
 from xp_tracker_app.helper import delta_to_time
 
 class Story(models.Model):
@@ -11,9 +12,15 @@ class Story(models.Model):
         return self.story_name
 
     def time_spent(self, pk):
+        """ Calculates time spent on story from Task.time_spent """
+        spent_sum = dt.timedelta(0)
+
         story = Story.objects.get(pk=pk)
-        story_tasks = story.task_set.all()
-        print(story_tasks)
+        story_tasks = story.task_set.all() # 'reverse' ForeignKey access from Story to Task
+        for task in story_tasks:
+            if task.time_fin:
+                spent_sum += task.time_fin - task.time_start
+        return delta_to_time(spent_sum)
 
     def time_estimated(self):
         return delta_to_time(self.time_est - self.time_start)
