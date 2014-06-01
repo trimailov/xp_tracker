@@ -35,6 +35,8 @@ class Task(models.Model):
         ('Mantas', 'Mantas'),
     )
 
+    story = models.ForeignKey(Story)
+
     task_name = models.CharField(max_length=200)
     time_start = models.DateTimeField(auto_now_add=True)
     time_est = models.DateTimeField()
@@ -42,8 +44,6 @@ class Task(models.Model):
 
     developer = models.CharField(max_length=60, choices=DEVELOPERS)
     iteration = models.IntegerField()
-
-    story = models.ForeignKey(Story)
 
     def __str__(self):
         return self.task_name
@@ -54,3 +54,9 @@ class Task(models.Model):
 
     def time_estimated(self):
         return delta_to_time(self.time_est - self.time_start)
+
+class TaskFinishingHistory(models.Model):
+    """ Model for storing multiple task finishing/updating time values """
+    task = models.ForeignKey(Task)
+    time_fin = models.DateTimeField()
+

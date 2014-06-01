@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from xp_tracker_app.models import Story, Task
+from xp_tracker_app.models import Story, Task, TaskFinishingHistory
 from xp_tracker_app.forms import StoryForm, TaskForm
 from xp_tracker_app.helper import delta_to_time
 from django.utils import timezone
@@ -45,6 +45,8 @@ def new_task(request):
 
 def task_finished(request, task_pk):
     task = Task.objects.get(pk=task_pk)
-    task.time_fin = timezone.now()
+    time_fin = timezone.now()
+    TaskFinishingHistory.objects.create(task=task, time_fin=time_fin)
+    task.time_fin = time_fin
     task.save()
     return redirect('index')
