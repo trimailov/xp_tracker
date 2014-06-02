@@ -4,9 +4,40 @@
 {% endblock title %}
 
 {% block content %}
-    <form id="task_form", method="post" action="{% url 'xp_tracker_app.views.new_task' %}">
+<!--      <form id="task_form", method="post" action="{% url 'xp_tracker_app.views.new_task' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
-    </form>
+    </form> -->
+
+    <form action="{% url 'xp_tracker_app.views.new_task' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ form.task_name.errors }}
+            <label for="id_task_name">Task:</label>
+            {{ form.task_name }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.time_est.errors }}
+            <label for="id_task_time_est">Deadline:</label>
+            {{ form.time_est }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.developer.errors }}
+            <label for="id_developer">Developer:</label>
+            {{ form.developer }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.iteration.errors }}
+            <label for="id_iteration">Iteration:</label>
+            {{ form.iteration }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.story.errors }}
+            <label for="id_story">Story:</label>
+            {{ form.story }}
+        </div>
+        <input type="submit" value="Submit" />
+    </form> 
 {% endblock content %}

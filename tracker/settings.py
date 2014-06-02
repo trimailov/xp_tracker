@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'south',
     'tracker',
     'xp_tracker_app',
+    'selenium',
 )
 
 MIDDLEWARE_CLASSES = (

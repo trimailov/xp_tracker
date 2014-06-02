@@ -16,9 +16,9 @@
                 <span>
                     Deadline: {{ s_t.0.time_est }} |
                     Estimated work time: {{ s_t.0.time_estimated }} |
-                    {% if s_t.1 != '0d 0h 0m' %}
-                        Spent work time: {{ s_t.1 }} |
-                    {% endif %}
+                    {# {% if s_t.1 != '0d 0h 0m' %} #}
+                    Spent work time: {{ s_t.1 }} |
+                    {# {% endif %} #}
                 </span>
             </div>
         {% endfor %}
