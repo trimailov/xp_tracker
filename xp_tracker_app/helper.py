@@ -6,4 +6,4 @@ def delta_to_time(timedelta):
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
     seconds = seconds % 60
-    return "{}d {}h {}m".format(days, hours, minutes)
+    return "{}d {}h {}m {}s".format(days, hours, minutes, seconds)

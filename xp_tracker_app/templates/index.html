@@ -16,9 +16,11 @@
                 <span>
                     Deadline: {{ s_t.0.time_est }} |
                     Estimated work time: {{ s_t.0.time_estimated }} |
-                    {# {% if s_t.1 != '0d 0h 0m' %} #}
+                    {% if s_t.1 != '0d 0h 0m 0s' %}
                     Spent work time: {{ s_t.1 }} |
-                    {# {% endif %} #}
+                    {% else %}
+                    No work spent on story yet |
+                    {% endif %}
                 </span>
             </div>
         {% endfor %}
@@ -46,6 +48,7 @@
                         Work time spent on task: {{ task.time_spent }} |
                         <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Improved</a>  |                         
                     {% else %}
+                        No work spent on task yet |
                         <a href="{% url 'xp_tracker_app.views.task_finished' task_pk=task.id %}">Finished</a>  |
                     {% endif %}
                 </span>

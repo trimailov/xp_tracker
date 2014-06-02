@@ -91,8 +91,8 @@ class HelpersTestCase(TestCase):
         time3 = dt.timedelta(0, 60) # 1 min
         time4 = dt.timedelta(0, 3600) # 1 hour
 
-        self.assertEqual(delta_to_time(time1), "1d 0h 0m")
-        self.assertEqual(delta_to_time(time2), "0d 0h 0m")
-        self.assertEqual(delta_to_time(time3), "0d 0h 1m")
-        self.assertEqual(delta_to_time(time4), "0d 1h 0m")
-        self.assertEqual(delta_to_time(time1+time2+time3+time4), "1d 1h 1m")
+        self.assertEqual(delta_to_time(time1), "1d 0h 0m 0s")
+        self.assertEqual(delta_to_time(time2), "0d 0h 0m 1s")
+        self.assertEqual(delta_to_time(time3), "0d 0h 1m 0s")
+        self.assertEqual(delta_to_time(time4), "0d 1h 0m 0s")
+        self.assertEqual(delta_to_time(time1+time2+time3+time4), "1d 1h 1m 1s")
