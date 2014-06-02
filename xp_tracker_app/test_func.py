@@ -79,6 +79,15 @@ class AdminSeleniumTest(LiveServerTestCase):
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('Site administration', body.text)
 
+        stories_links = self.browser.find_elements_by_link_text('Storys')
+        self.assertEquals(len(stories_links), 1)
+
+        stories_links = self.browser.find_elements_by_link_text('Tasks')
+        self.assertEquals(len(stories_links), 1)
+
+        stories_links = self.browser.find_elements_by_link_text('Task finishing historys')
+        self.assertEquals(len(stories_links), 1)
+
 class FormTest(TestCase):
     """ Tests for forms """
     def setUp(self):
