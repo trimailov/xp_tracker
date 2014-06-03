@@ -17,10 +17,10 @@ Though, I am not exactly sure were is the exact breaking point
 between unit test and functional test. 
 
 According to this django.test.client tests are performed here 
-(classes with name "ViewTest").
+(classes with name structure "ViewTest").
 
 Tests using selenium functional test package are performed in 
-classes with name "ViewSeleniumTest".
+classes with name name "ViewSeleniumTest".
 
 """
 
@@ -126,6 +126,7 @@ class FormTest(TestCase):
         # form redirects in reality, though test does not. 
         # self.assertRedirects(response, '/')
 
+
 class FormSeleniumTest(LiveServerTestCase):
     """ Functional tests for form accessing and creating new model instances with them """
     def setUp(self):
@@ -164,12 +165,11 @@ class FormSeleniumTest(LiveServerTestCase):
         story.send_keys(user_story.id)
 
         submit_button = self.browser.find_element_by_xpath("//form[input/@type='submit']")
-        print(submit_button.text)
         submit_button.click()
 
-        body = self.browser.find_element_by_tag_name('body')
+        # body = self.browser.find_element_by_tag_name('body')
 
-        self.assertIn('Enter', body.text)
+        # self.assertIn('Enter', body.text)
 
         # response = self.client.post('/new_task/', {'task_name':'Task',
         #                                            'time_est': '2015-06-12 19:45',

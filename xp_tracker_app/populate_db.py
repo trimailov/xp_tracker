@@ -3,7 +3,7 @@ from django.utils import timezone
 import datetime as dt
 import random
 
-""" Module, for populating database """
+""" Module, for populating database during development or testing """
 
 def create_stories():
     for story in range(5):

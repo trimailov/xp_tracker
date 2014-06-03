@@ -11,3 +11,5 @@ Features:
 -   Tasks have fields for iteration and developer;
 -   Web-app calculates all estimated work time and all spent work time;
 -   Developers are selected from a dropdown.
+
+For production in settings.py `DEBUG` option must be set to `False`

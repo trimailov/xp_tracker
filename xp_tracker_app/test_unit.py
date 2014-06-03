@@ -18,6 +18,13 @@ class StoryTestCase(TestCase):
         self.assertEqual(story.time_est.replace(tzinfo=None), dt.datetime(2015, 6, 1, 12))
         self.assertEqual(story.time_start.date(), dt.date.today())
 
+    def test_time_estimated_method(self):
+        # update automatic Story.time_start value
+        Story.objects.filter(story_name="User story").update(time_start=dt.datetime(2015, 5, 31, 12))
+        story = Story.objects.get(story_name="User story")
+
+        self.assertEqual(story.time_estimated(), '1d 0h 0m 0s')
+
 class TaskTestCase(TestCase):
     """ Unit tests for Task model """
     def setUp(self):
@@ -49,8 +56,11 @@ class TaskTestCase(TestCase):
 class TaskFinishingHistoryTestCase(TestCase):
     """ Unit tests for TaskFinishingHistory model """
     def setUp(self):
+        # create story which will be associated to tasks
         story = Story.objects.create(story_name="User story 3",
                                      time_est=dt.datetime(2015, 6, 1, 12))
+
+        # create few tasks which will be associated to TaskFinsihingHistory(TFH) table
         task1 = Task.objects.create(task_name="Task name 1",
                             time_est=dt.datetime(2015, 1, 1, 12),
                             developer='Guido von Rossum',
@@ -61,6 +71,7 @@ class TaskFinishingHistoryTestCase(TestCase):
                             developer='Linus Torvalds',
                             iteration=2,
                             story=story)
+
         TaskFinishingHistory.objects.create(task_id=task1.id, time_fin=timezone.now())
         TaskFinishingHistory.objects.create(task_id=task2.id, time_fin=timezone.now())
         TaskFinishingHistory.objects.create(task_id=task1.id, 
@@ -73,9 +84,11 @@ class TaskFinishingHistoryTestCase(TestCase):
         task1 = Task.objects.get(task_name="Task name 1")
         task2 = Task.objects.get(task_name="Task name 2")
 
+        # 'reverse' ForeignKey access from Task to TaskFinishingHistory
         task1_history = task1.taskfinishinghistory_set.all()
         task2_history = task2.taskfinishinghistory_set.all()
 
+        # assert all History entries are related to the correct Task
         for entry1 in task1_history:
             self.assertEqual(entry1.task_id, task1.id)
 

@@ -2,6 +2,7 @@ from django import forms
 from xp_tracker_app.models import Story, Task
 
 class StoryForm(forms.ModelForm):
+    """ Story form, with explicitly specified labels, error_messages, placeholders """
     story_name = forms.CharField(label='Story',
                                  error_messages={'required':'Enter User story name'},
                                  widget=forms.TextInput(attrs={'placeholder': 'As a customer, I want cool website...'}))
@@ -11,9 +12,9 @@ class StoryForm(forms.ModelForm):
                                    widget=forms.TextInput(attrs={'placeholder': '2015-08-23 14:28'}))
     class Meta:
         model = Story
-        # fields = ['story_name', 'time_est']
 
 class TaskForm(forms.ModelForm):
+    """ Task form, with explicitly specified labels, error_messages, placeholders """
     task_name = forms.CharField(label='Task',
                                 error_messages={'required':'Enter task name'},
                                 widget=forms.TextInput(attrs={'placeholder': 'Create cool website...'}))
@@ -31,4 +32,3 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        # fields = ['task_name', 'time_est', 'developer', 'iteration', 'story']

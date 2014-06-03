@@ -1,7 +1,10 @@
 """ Helper functions """
 
 def delta_to_time(timedelta):
-    """ Converts datetime.timedelta time in seconds to days, hours, minutes """
+    """ 
+    Converts datetime.timedelta time in seconds to 
+    more readable days, hours, minutes, seconds 
+    """
     days, seconds = timedelta.days, timedelta.seconds
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
