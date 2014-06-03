@@ -11,11 +11,11 @@ class Story(models.Model):
     def __str__(self):
         return self.story_name
 
-    def time_spent(self, pk):
-        """ Calculates time spent on story time spent on related tasks """
+    def time_spent(self):
+        """ Calculates time spent on story from related tasks """
         spent_sum = dt.timedelta(0)
 
-        story = Story.objects.get(pk=pk)
+        story = Story.objects.get(pk=self.id)
 
         # 'reverse' ForeignKey access from Story to Task
         story_tasks = story.task_set.all() 

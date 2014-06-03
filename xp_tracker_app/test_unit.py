@@ -8,8 +8,21 @@ from xp_tracker_app.helper import delta_to_time
 class StoryTestCase(TestCase):
     """ Unit tests for Story model """
     def setUp(self):
-        Story.objects.create(story_name="User story",
+        story = Story.objects.create(story_name="User story",
                              time_est=dt.datetime(2015, 6, 1, 12))
+
+        Task.objects.create(task_name="Task name 1",
+                            time_est=dt.datetime(2015, 5, 27, 12),
+                            developer='Linus Torvalds',
+                            iteration=1,
+                            story=story)
+
+        Task.objects.create(task_name="Task name 2",
+                            time_est=dt.datetime(2015, 5, 29, 12),
+                            developer='Linus Torvalds',
+                            iteration=1,
+                            story=story)
+
 
     def test_story_creates(self):
         story = Story.objects.get(story_name="User story")
@@ -24,6 +37,16 @@ class StoryTestCase(TestCase):
         story = Story.objects.get(story_name="User story")
 
         self.assertEqual(story.time_estimated(), '1d 0h 0m 0s')
+
+    def test_time_spent_method(self):
+        story = Story.objects.get(story_name="User story")
+        Task.objects.all().update(time_start=dt.datetime(2015, 5, 20, 12))
+        tasks = Task.objects.all()
+
+        for task in tasks:
+            task.time_fin = dt.datetime(2015, 5, 25, 12)
+
+        self.assertEqual(story.time_spent(), '10d 0h 0m 0s')
 
 class TaskTestCase(TestCase):
     """ Unit tests for Task model """

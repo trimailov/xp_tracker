@@ -6,18 +6,18 @@
 
 {% block content %}
     <a href="{% url 'xp_tracker_app.views.new_story' %}">New story</a></br>
-    <a href="{% url 'xp_tracker_app.views.new_task' %}">New task</a>    
+    <a href="{% url 'xp_tracker_app.views.new_task' %}">New task</a>
 
-    {% if story_time %}
+    {% if stories %}
         <h2>User Stories</h2>
-        {% for s_t in story_time %}
+        {% for story in stories %}
             <div>
-                <h4>{{ s_t.0.story_name }}</h4>
+                <h4>{{ story.story_name }}</h4>
                 <span>
-                    Deadline: {{ s_t.0.time_est }} |
-                    Estimated work time: {{ s_t.0.time_estimated }} |
-                    {% if s_t.1 != '0d 0h 0m 0s' %}
-                    Spent work time: {{ s_t.1 }} |
+                    Deadline: {{ story.time_est }} |
+                    Estimated work time: {{ story.time_estimated }} |
+                    {% if story.time_spent != '0d 0h 0m 0s' %}
+                    Spent work time: {{ story.time_spent }} |
                     {% else %}
                     No work spent on story yet |
                     {% endif %}

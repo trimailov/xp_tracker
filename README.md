@@ -10,7 +10,7 @@ Instructions
 1. Clone repository
 1. Run `pip install -r requirements.txt`
 1. Run postgres (`psql`)
-1. Create database `CREATE DATABASE xp_tracker_app`
+1. Create database `CREATE DATABASE xp_tracker_app;`
 1. In project repository run `python manage.py shell`
 1. In shell prompt enter: `from xp_tracker_app import populate_db as popdb`
 1. `popdb.create_stories()`
@@ -18,7 +18,8 @@ Instructions
 1. In project repository run `python manage.py runserver`
 
 
-Features:
+Features
+---------
 -   Stories and tasks are estimated separately;
 -   Work time is registered only for tasks;
 -   Multiple task finishing/improving times could be registered;
@@ -28,4 +29,3 @@ Features:
 -   Developers are selected from a dropdown.
 
 For production in settings.py `DEBUG` option must be set to `False`
-
