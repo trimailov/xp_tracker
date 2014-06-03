@@ -4,6 +4,7 @@
 {% endblock title %}
 
 {% block content %}
+    <h3>Create new story</h3>
     <form id="story_form", method="post" action="{% url 'xp_tracker_app.views.new_story' %}">
         {% csrf_token %}
         {{ form.as_p }}

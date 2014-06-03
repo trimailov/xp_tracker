@@ -51,10 +51,10 @@ class IndexTest(TestCase):
             self.assertContains(response, 'There are no tasks')
 
 class AdminSeleniumTest(LiveServerTestCase):
-    """ Tests for index page using selenium """
+    """ Functional tests for admin page using selenium """
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(2)
 
         self.admin = User.objects.create_superuser('admin', 
                                                    'admin@example.com', 
@@ -63,7 +63,7 @@ class AdminSeleniumTest(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_can_create_story_via_admin_site(self):
+    def test_can_access_admin_site(self):
         self.browser.get(self.live_server_url + '/admin/')
 
         body = self.browser.find_element_by_tag_name('body')
@@ -80,13 +80,13 @@ class AdminSeleniumTest(LiveServerTestCase):
         self.assertIn('Site administration', body.text)
 
         stories_links = self.browser.find_elements_by_link_text('Storys')
-        self.assertEquals(len(stories_links), 1)
+        self.assertEqual(len(stories_links), 1)
 
-        stories_links = self.browser.find_elements_by_link_text('Tasks')
-        self.assertEquals(len(stories_links), 1)
+        tasks_links = self.browser.find_elements_by_link_text('Tasks')
+        self.assertEqual(len(tasks_links), 1)
 
-        stories_links = self.browser.find_elements_by_link_text('Task finishing historys')
-        self.assertEquals(len(stories_links), 1)
+        tasks_history_links = self.browser.find_elements_by_link_text('Task finishing historys')
+        self.assertEqual(len(tasks_history_links), 1)
 
 class FormTest(TestCase):
     """ Tests for forms """
@@ -125,3 +125,41 @@ class FormTest(TestCase):
 
         # form redirects in reality, though test does not. 
         # self.assertRedirects(response, '/')
+
+class FormSeleniumTest(LiveServerTestCase):
+    """ Functional tests for form accessing and creating new model instances with them """
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        # self.browser.implicitly_wait(1)
+
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_new_task_form_from_index(self):
+        user_story = Story.objects.create(story_name='User story', time_est=dt.datetime(2015, 7, 24, 13, 35))
+        self.browser.get(self.live_server_url + '/')
+
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('New task', body.text)
+
+        new_task = self.browser.find_element_by_link_text('New task')
+        new_task.click()
+
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Create new task', body.text)
+
+        task_name = self.browser.find_element_by_name('task_name')
+        task_name.send_keys('Create cool website')
+
+        time_est = self.browser.find_element_by_name('time_est')
+        time_est.send_keys('2015-06-12 19:45')
+
+        developer = self.browser.find_element_by_name('developer')
+        developer.send_keys(Task.DEVELOPERS[0][0])
+
+        iteration = self.browser.find_element_by_name('iteration')
+        iteration.send_keys(1)
+
+        story = self.browser.find_element_by_name('story')
+        story.send_keys(user_story.id)
+        story.send_keys(Keys.RETURN)
