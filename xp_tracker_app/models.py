@@ -6,17 +6,19 @@ class Story(models.Model):
     """ User Story model """
     story_name = models.CharField(max_length=200)
     time_start = models.DateTimeField(auto_now_add=True)
-    time_est = models.DateTimeField()
+    time_est = models.DateTimeField() # deadline
 
     def __str__(self):
         return self.story_name
 
     def time_spent(self, pk):
-        """ Calculates time spent on story from Task.time_spent """
+        """ Calculates time spent on story time spent on related tasks """
         spent_sum = dt.timedelta(0)
 
         story = Story.objects.get(pk=pk)
-        story_tasks = story.task_set.all() # 'reverse' ForeignKey access from Story to Task
+
+        # 'reverse' ForeignKey access from Story to Task
+        story_tasks = story.task_set.all() 
         for task in story_tasks:
             if task.time_fin:
                 spent_sum += task.time_fin - task.time_start
@@ -39,7 +41,7 @@ class Task(models.Model):
 
     task_name = models.CharField(max_length=200)
     time_start = models.DateTimeField(auto_now_add=True)
-    time_est = models.DateTimeField()
+    time_est = models.DateTimeField() # deadline
     time_fin = models.DateTimeField(blank=True, null=True)
 
     developer = models.CharField(max_length=60, 
@@ -49,15 +51,17 @@ class Task(models.Model):
     def __str__(self):
         return self.task_name
 
+    # returns time spent on a task
     def time_spent(self):
         if self.time_fin:
             return delta_to_time(self.time_fin - self.time_start)
 
+    # returns estimated working time on a task
     def time_estimated(self):
         return delta_to_time(self.time_est - self.time_start)
 
 class TaskFinishingHistory(models.Model):
-    """ Model for storing multiple task finishing/updating time values """
+    """ Model for storing multiple finishing/updating time values for a task """
     task = models.ForeignKey(Task)
     time_fin = models.DateTimeField()
 

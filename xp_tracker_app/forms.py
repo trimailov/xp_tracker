@@ -4,7 +4,7 @@ from xp_tracker_app.models import Story, Task
 class StoryForm(forms.ModelForm):
     story_name = forms.CharField(label='Story',
                                  error_messages={'required':'Enter User story name'},
-                                 widget=forms.TextInput(attrs={'placeholder': 'As a custome, I want cool website...'}))
+                                 widget=forms.TextInput(attrs={'placeholder': 'As a customer, I want cool website...'}))
     time_est = forms.DateTimeField(label='Deadline',
                                    error_messages={'required':'Enter deadline',
                                                    'invalid':'Enter valid deadline (eg.: 2015-05-17 10:35)'},

@@ -130,7 +130,7 @@ class FormSeleniumTest(LiveServerTestCase):
     """ Functional tests for form accessing and creating new model instances with them """
     def setUp(self):
         self.browser = webdriver.Firefox()
-        # self.browser.implicitly_wait(1)
+        self.browser.implicitly_wait(2)
 
     def tearDown(self):
         self.browser.quit()
@@ -162,4 +162,23 @@ class FormSeleniumTest(LiveServerTestCase):
 
         story = self.browser.find_element_by_name('story')
         story.send_keys(user_story.id)
-        story.send_keys(Keys.RETURN)
+
+        submit_button = self.browser.find_element_by_xpath("//form[input/@type='submit']")
+        print(submit_button.text)
+        submit_button.click()
+
+        body = self.browser.find_element_by_tag_name('body')
+
+        self.assertIn('Enter', body.text)
+
+        # response = self.client.post('/new_task/', {'task_name':'Task',
+        #                                            'time_est': '2015-06-12 19:45',
+        #                                            'developer': Task.DEVELOPERS[0][0],
+        #                                            'iteration': 1,
+        #                                            'story': story}, follow=True)
+
+        # self.assertFormError(response, 'form', 'time_est', 'Enter valid deadline (eg.: 2015-05-17 10:35)')
+
+
+        # new_task = Task.objects.get(task_name='Create cool website')
+        # self.assertEqual(len(new_task), 1)
