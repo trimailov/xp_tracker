@@ -1,6 +1,8 @@
 import datetime as dt
+
 from django.test import TestCase
 from django.utils import timezone
+
 from xp_tracker_app.models import Story, Task, TaskFinishingHistory
 from xp_tracker_app.helper import delta_to_time
 

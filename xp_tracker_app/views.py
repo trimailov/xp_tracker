@@ -1,10 +1,11 @@
+import datetime as dt
+
 from django.shortcuts import render, redirect
+from django.utils import timezone
+
 from xp_tracker_app.models import Story, Task, TaskFinishingHistory
 from xp_tracker_app.forms import StoryForm, TaskForm
 from xp_tracker_app.helper import delta_to_time
-from django.utils import timezone
-import datetime as dt
-
 
 def index(request):
     """ View for rendering index page. """

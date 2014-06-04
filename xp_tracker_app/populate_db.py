@@ -1,7 +1,9 @@
-from xp_tracker_app.models import Story, Task
-from django.utils import timezone
 import datetime as dt
 import random
+
+from django.utils import timezone
+
+from xp_tracker_app.models import Story, Task
 
 """ Module, for populating database during development or testing """
 

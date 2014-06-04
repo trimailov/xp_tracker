@@ -1,5 +1,7 @@
-from django.db import models
 import datetime as dt
+
+from django.db import models
+
 from xp_tracker_app.helper import delta_to_time
 
 class Story(models.Model):

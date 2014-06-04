@@ -3,14 +3,10 @@ import datetime as dt
 from django.contrib.auth.models import User
 from django.test.client import Client
 from django.test import TestCase, LiveServerTestCase
-from django.utils import timezone
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 from xp_tracker_app.models import Story, Task
-from xp_tracker_app.forms import TaskForm
-
-import time
 
 """ 
 xp_tracker_app functional test module.
