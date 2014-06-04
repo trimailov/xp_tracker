@@ -1,8 +1,9 @@
 Extreme Programming user stories and tasks tracker
 =========
 
-App is written with Python 3.4, database - PostgreSQL 9.3. 
+App is written with Python 3.4, database - PostgreSQL 9.3.
 Dependencies are in requirements.txt
+Functional tests use `selenium` package and `Firefox` browser.
 
 Instructions
 ---------
