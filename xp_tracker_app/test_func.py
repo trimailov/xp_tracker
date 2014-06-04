@@ -10,6 +10,8 @@ from selenium.webdriver.common.keys import Keys
 from xp_tracker_app.models import Story, Task
 from xp_tracker_app.forms import TaskForm
 
+import time
+
 """ 
 xp_tracker_app functional test module.
 
@@ -67,6 +69,7 @@ class AdminSeleniumTest(LiveServerTestCase):
         self.browser.get(self.live_server_url + '/admin/')
 
         body = self.browser.find_element_by_tag_name('body')
+        # assert we can see typical django administration title
         self.assertIn('Django administration', body.text)
 
         username_field = self.browser.find_element_by_name('username')
@@ -76,6 +79,7 @@ class AdminSeleniumTest(LiveServerTestCase):
         password_field.send_keys('password')
         password_field.send_keys(Keys.RETURN)
 
+        # assert we logged in to stie administration
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('Site administration', body.text)
 
@@ -123,7 +127,7 @@ class FormTest(TestCase):
                                                    'iteration': 1,
                                                    'story': story}, follow=True)
 
-        # form redirects in reality, though test does not. 
+        # form redirects in reality, though test does not. Do not know the reason why 
         # self.assertRedirects(response, '/')
 
 
@@ -137,18 +141,19 @@ class FormSeleniumTest(LiveServerTestCase):
         self.browser.quit()
 
     def test_new_task_form_from_index(self):
-        user_story = Story.objects.create(story_name='User story', time_est=dt.datetime(2015, 7, 24, 13, 35))
+        Story.objects.create(story_name='User story', time_est=dt.datetime(2015, 7, 24, 13, 35))
         self.browser.get(self.live_server_url + '/')
 
-        body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('New task', body.text)
-
+        # go to new task form
         new_task = self.browser.find_element_by_link_text('New task')
         new_task.click()
 
+        # assert we are on a new task form page
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('Create new task', body.text)
+        self.assertEqual(self.browser.current_url, self.live_server_url+'/new_task/')
 
+        # enter form fields
         task_name = self.browser.find_element_by_name('task_name')
         task_name.send_keys('Create cool website')
 
@@ -161,24 +166,46 @@ class FormSeleniumTest(LiveServerTestCase):
         iteration = self.browser.find_element_by_name('iteration')
         iteration.send_keys(1)
 
-        story = self.browser.find_element_by_name('story')
-        story.send_keys(user_story.id)
+        story_options = self.browser.find_elements_by_tag_name('option')
+        for story in story_options:
+            if story.text == "User story":
+                story.click()
 
-        submit_button = self.browser.find_element_by_xpath("//form[input/@type='submit']")
+        submit_button = self.browser.find_element_by_name('submit')
         submit_button.click()
 
-        # body = self.browser.find_element_by_tag_name('body')
+        # assert we got redirected to index page
+        c_url = self.browser.current_url
+        self.assertEqual(c_url, self.live_server_url + '/')
 
-        # self.assertIn('Enter', body.text)
+        submited_task = Task.objects.get(task_name='Create cool website')
+        self.assertIsNotNone(submited_task)
 
-        # response = self.client.post('/new_task/', {'task_name':'Task',
-        #                                            'time_est': '2015-06-12 19:45',
-        #                                            'developer': Task.DEVELOPERS[0][0],
-        #                                            'iteration': 1,
-        #                                            'story': story}, follow=True)
+    def test_new_story_form_from_index(self):
+        self.browser.get(self.live_server_url + '/')
 
-        # self.assertFormError(response, 'form', 'time_est', 'Enter valid deadline (eg.: 2015-05-17 10:35)')
+        # go to new story form
+        new_story = self.browser.find_element_by_link_text('New story')
+        new_story.click()
 
+        # assert we are on new story form page
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Create new story', body.text)
+        self.assertEqual(self.browser.current_url, self.live_server_url+'/new_story/')
 
-        # new_task = Task.objects.get(task_name='Create cool website')
-        # self.assertEqual(len(new_task), 1)
+        # enter form fields
+        story_name = self.browser.find_element_by_name('story_name')
+        story_name.send_keys('As a customer, I want cool website')
+
+        time_est = self.browser.find_element_by_name('time_est')
+        time_est.send_keys('2015-06-15 19:45')
+
+        submit_button = self.browser.find_element_by_name('submit')
+        submit_button.click()
+
+        # assert we got redirected to index page
+        c_url = self.browser.current_url
+        self.assertEqual(c_url, self.live_server_url + '/')
+
+        submited_story = Story.objects.get(story_name='As a customer, I want cool website')
+        self.assertIsNotNone(submited_story)

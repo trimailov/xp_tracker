@@ -28,4 +28,6 @@ Features
 -   Web-app calculates all estimated work time and all spent work time;
 -   Developers are selected from a dropdown.
 
+In tests naive `datetime` is used, ignore the warnings while runing them.
+
 For production in settings.py `DEBUG` option must be set to `False`

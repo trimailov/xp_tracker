@@ -8,6 +8,6 @@
     <form id="story_form", method="post" action="{% url 'xp_tracker_app.views.new_story' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Submit" />
+        <input name="submit" type="submit" value="Submit" />
     </form>
 {% endblock content %}
